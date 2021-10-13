@@ -24,6 +24,7 @@ public class Driver {
     }
 
     public Driver() throws UnknownDateOfBirthException {
+        // initialise the class
         init();
     }
 
@@ -47,7 +48,6 @@ public class Driver {
             dob = computeDateOfBirth();
             age = computeAge(dob);
             students[i] = new Student(names[i], age, dob, generateRandomId());
-//            System.out.println("Age: " + students[i].getStudentAge() + "DOB: " + students[i].getStudentDob().toString());
         }
     }
 
@@ -207,10 +207,14 @@ public class Driver {
         return (long) Math.floor(Math.random() * 90_000_000L) + 10_000_000L;
     }
 
+    /**
+     * Creates the birthday of a student, using the gregorian calendar and a minimum and maximum birthdate year range
+     * that reflects newly enrolling students for college this year.
+     */
     public DateTime computeDateOfBirth(){
         GregorianCalendar gregCal = new GregorianCalendar();
-        int maxBirthYear = 2005;
-        int minBirthYear = 2003;
+        int maxBirthYear = 2004;
+        int minBirthYear = 2000;
         int year = randIntInRange(minBirthYear, maxBirthYear);
 
         gregCal.set(Calendar.YEAR, year);
@@ -218,11 +222,15 @@ public class Driver {
         int dayOfYear = randIntInRange(1, gregCal.getActualMaximum(Calendar.DAY_OF_YEAR));
 
         gregCal.set(Calendar.DAY_OF_YEAR, dayOfYear);
-        int offset = 1;
+        int offset = 1; // months returned as 0-11, offset to fit the DateTime object
         return new DateTime(gregCal.get(Calendar.YEAR), gregCal.get(Calendar.MONTH) + offset,
                 gregCal.get(Calendar.DAY_OF_MONTH), 0, 0);
     }
 
+    /**
+     * Takes a DateTime object of the students' birthday, and calculates the age of the student.
+     * Throws an exception if the BirthDate is null
+     */
     public int computeAge(DateTime birthDate) throws UnknownDateOfBirthException{
         if(birthDate != null) {
             LocalDate dob = birthDate.toLocalDate();
@@ -230,11 +238,11 @@ public class Driver {
             Years age = Years.yearsBetween(dob, now);
             return age.getYears();
         }else {
-            throw new UnknownDateOfBirthException(birthDate);
+            throw new UnknownDateOfBirthException(null);
         }
     }
 
     public int randIntInRange(int min, int max) {
-        return min + (int)Math.round(Math.random() * (min - max));
+        return min + (int)Math.round(Math.random() * (max - min));
     }
 }
