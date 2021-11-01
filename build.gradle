@@ -15,7 +15,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation 'org.terasoluna.gfw:terasoluna-gfw-jodatime-dependencies:5.7.0.RELEASE'
     implementation 'com.github.FilthyHound:CT417-Assignment-1-a:v1.4'
-    testImplementation 'org.mockito:mockito-core:3.12.4'
+    testImplementation 'org.mockito:mockito-core:4.0.0'
 }
 
 test {
